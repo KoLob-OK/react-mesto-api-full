@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const cors = require('cors');
 const { celebrate, errors, Joi } = require('celebrate');
 
 const usersRouter = require('./routes/users');
@@ -29,6 +30,7 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(helmet());
 app.use(express.json());
+app.use(cors());
 app.use(requestLogger); // подключаем логгер запросов
 
 // роуты, не требующие авторизации (регистрация и логин)
