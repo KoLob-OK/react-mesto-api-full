@@ -1,0 +1,85 @@
+// 1. получить всех пользователей
+GET http://localhost:3000/users
+Accept: application/json
+
+###
+
+// 2. получить пользователя по Id
+GET http://localhost:3000/users/638cb09f606b39b6002ad781
+Accept: application/json
+
+###
+
+// 3. получить все карточки
+GET http://localhost:3000/cards/638cb09f606b39b6002ad781
+Accept: application/json
+
+###
+
+// 4. создать нового пользователя (email, password, name, about, avatar)
+POST http://localhost:3000/signup
+Content-Type: application/json
+
+{
+  "email": "test8@test.ru",
+  "password": "11111111",
+  "about": "Чудо-юдо-new",
+  "avatar": "https://avatars.dzeninfra.ru/get-zen_doc/1595998/pub_5fe906cfe5cdbc6a96154adf_5fe9fd003ede826fd44bdbb3"
+}
+
+###
+
+// 5. логин пользователя (email, password)
+POST http://localhost:3000/signin
+Content-Type: application/json
+
+{
+  "email": "test7@test.ru",
+  "password": "11111111"
+}
+
+###
+
+// 6. создать новую карточку (name, link)
+POST http://localhost:3000/cards
+Content-Type: application/json
+
+{
+  "name": "Крь55555555",
+  "link": "https://avatars.dzeninfra.ru/get-zen_doc/1595998/pub_5fe906cfe5cdbc6a96154adf_5fe9fd003ede826fd44bdbb3"
+}
+
+###
+
+// 7. удалить карточку (ID)
+DELETE http://localhost:3000/cards/638cb67d6afbd94b3a2e0175
+Content-Type: application/json
+
+###
+
+// 8. изменить аватар пользователя (link)
+PATCH http://localhost:3000/users/me/avatar
+Content-Type: application/json
+
+{
+  "avatar": "https://avatars.dzeninfra.ru/get-zen_doc/1595998/pub_5fe906cfe5cdbc6a96154adf_5fe9fd003ede826fd44bdbb3"
+}
+
+###
+
+// 9. изменить пользователя (name, about)
+PATCH http://localhost:3000/users/me
+Content-Type: application/json
+
+{
+  "name": "Kolob",
+  "about": "Чудо"
+}
+
+###
+
+// 10. получить информацию о пользователе
+GET http://localhost:3000/users/me
+Content-Type: application/json
+
+###

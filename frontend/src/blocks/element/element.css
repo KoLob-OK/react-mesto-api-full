@@ -1,0 +1,19 @@
+.element {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 22px;
+  max-width: 282px;
+  list-style-type: none;
+  background: #FFF;
+  border-radius: 10px;
+  position: relative;
+
+}
+
+@media screen and (max-width: 568px) {
+  .element {
+    max-width: 500px;
+    width: 100%;
+  }
+}

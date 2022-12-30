@@ -1,0 +1,21 @@
+.elements {
+  width: calc(100% - 2 * 200px);
+}
+
+@media screen and (max-width: 1280px) {
+  .elements {
+    width: calc(100% - 2*120px);
+  }
+}
+
+@media screen and (max-width: 1140px) {
+  .elements {
+    width: calc(100% - 2*50px);
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .elements {
+    width: calc(100% - 2*19px);
+  }
+}

@@ -1,0 +1,15 @@
+.element__image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 282px;
+  height: 282px;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 568px) {
+  .element__image {
+    width: 100%;
+  }
+}

@@ -1,0 +1,17 @@
+.header__burger-menu-btn_opened {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: block;
+  background: url("../../../../images/CloseIcon.svg");
+  background-position: 100%;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  border: none;
+  box-sizing: border-box;
+  padding: 0;
+  transition: opacity 0.3s linear;
+  cursor: pointer;
+  right: 0;
+  align-self: auto;
+}

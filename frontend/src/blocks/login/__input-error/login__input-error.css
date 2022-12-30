@@ -1,0 +1,11 @@
+.login__input-error {
+    display: block;
+    margin: 0;
+    min-height: 28px;
+    padding: 5px 0;
+    max-width: 358px;
+    color: #F00;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+}

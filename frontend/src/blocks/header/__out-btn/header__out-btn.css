@@ -1,0 +1,25 @@
+.header__out-btn {
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: right;
+  color: #A9A9A9;
+  padding-top: 6px;
+  transition: opacity 0.3s linear;
+  cursor: pointer;
+  background: none;
+  border: none;
+  align-self: flex-start;
+}
+
+.header__out-btn:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 568px) {
+  .header__out-btn {
+    align-self: center;
+  }
+}
