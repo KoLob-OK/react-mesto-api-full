@@ -10,7 +10,6 @@
   },
   "author": "KolobOK",
   "license": "ISC",
-  "homepage": "https://KoLob-OK.github.io/express-mesto-gha/",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.1",
