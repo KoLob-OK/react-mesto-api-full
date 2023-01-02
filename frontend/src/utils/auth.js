@@ -48,12 +48,12 @@ class Auth {
     // Метод проверки токена пользователя (принимает токен)
     // отправляет токен пользователя
     // возвращает промис {Promise} - 2 параметра: _id и email (для вставки в шапку)
-    checkToken(token) {
+    checkUser(token) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization" : `Bearer ${token}`
+                "Authorization": `Bearer ${token}`,
             },
         })
             .then(res => {
@@ -63,6 +63,6 @@ class Auth {
 }
 
 /*++++++++++++++++++++API+++++++++++++++++++++++*/
-const auth = new Auth('https://auth.nomoreparties.co');
+const auth = new Auth('http://localhost:3000');
 
 export default auth;

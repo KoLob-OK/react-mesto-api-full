@@ -89,6 +89,7 @@ const getCurrentUser = async (req, res, next) => {
       next(new ErrorHandler(404, 'Ошибка 404. Пользователь не найден'));
     }
     res.status(statusCode.ok).send(user);
+    console.log('Текущий пользователь загружен');
   } catch (err) {
     next(err);
   }

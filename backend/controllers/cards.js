@@ -11,8 +11,9 @@ const statusCode = {
 const getAllCards = async (req, res, next) => {
   console.log('getAllCards');
   try {
-    const cards = await Card.find({}).populate('owner');
-    res.status(statusCode.ok).send(cards);
+    const cards = await Card.find({}).populate(['owner', 'likes']);
+    res.status(statusCode.ok).send(cards.reverse());
+    console.log('Карточки загружены');
   } catch (err) {
     next(err);
   }
@@ -25,6 +26,7 @@ const createCard = async (req, res, next) => {
   try {
     const ownerId = req.user._id;
     const card = await Card.create({ name, link, owner: ownerId });
+    await card.populate('owner');
     console.log(card);
     res.status(statusCode.created).send(card);
   } catch (err) {
@@ -49,7 +51,6 @@ const deleteCard = async (req, res, next) => {
     await Card.findByIdAndRemove(cardId);
     res.status(statusCode.ok).send(card);
   } catch (err) {
-    // err.name = 'ForbiddenError';
     next(err);
   }
 };

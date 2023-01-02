@@ -50,8 +50,12 @@ function App() {
     // Используем эффект для получения массива с начальными карточками и данных пользователя
     useEffect(() => {
         if (isLoggedIn) {
+            const jwt = localStorage.getItem('jwt');
+            if (!jwt) {
+                return;
+            }
             api
-                .getInitialCards()
+                .getInitialCards(jwt)
                 .then((initialCards) => {
                     setCards(initialCards);
                 })
@@ -60,7 +64,7 @@ function App() {
                 });
 
             api
-                .getUserData()
+                .getUserData(jwt)
                 .then((userData) => {
                     setCurrentUser(userData);
                 })
@@ -105,8 +109,12 @@ function App() {
     // Обработчик отправки данных пользователя
     function handleUpdateUser(userData) {
         setIsLoading(true);
+        const jwt = localStorage.getItem('jwt');
+        if (!jwt) {
+            return;
+        }
         api
-            .changeUserData(userData)
+            .changeUserData(userData, jwt)
             .then((newData) => {
                 setCurrentUser(newData);
                 closeAllPopups();
@@ -124,8 +132,12 @@ function App() {
     // Обработчик отправки данных аватара
     function handleUpdateAvatar(userAvatar) {
         setIsLoading(true);
+        const jwt = localStorage.getItem('jwt');
+        if (!jwt) {
+            return;
+        }
         api
-            .updateAvatar(userAvatar)
+            .updateAvatar(userAvatar, jwt)
             .then((newData) => {
                 setCurrentUser(newData);
                 closeAllPopups();
@@ -142,10 +154,14 @@ function App() {
     function handleCardLike(card) {
         // Объявляем переменную "Есть Лайк" (isLiked) - проверяем, есть ли уже мой лайк на этой карточке
         const isLiked = card.likes.some((i) => i._id === currentUser._id);
+        const jwt = localStorage.getItem('jwt');
+        if (!jwt) {
+            return;
+        }
 
         // Делаем запрос на сервер
         api
-            .changeLikeCardStatus(card._id, !isLiked)
+            .changeLikeCardStatus(card._id, !isLiked, jwt)
             .then((newCard) => {
                 // Перебором по массиву методом map проверяем, есть ли лайк у карточки
                 // (если id карточки в стейте (card) точно равен id карточки из массива c сервера (newCard),
@@ -162,8 +178,12 @@ function App() {
     // Функция-обработчик добавления карточки
     function handleAddPlaceSubmit(newPlace) {
         setIsLoading(true);
+        const jwt = localStorage.getItem('jwt');
+        if (!jwt) {
+            return;
+        }
         api
-            .addCard(newPlace)
+            .addCard(newPlace, jwt)
             .then((newCard) => {
                 setCards([newCard, ...cards]);
                 closeAllPopups();
@@ -184,8 +204,12 @@ function App() {
     // Функция-обработчик подтверждения удаления карточки
     function handleConfirmDel() {
         setIsLoading(true);
+        const jwt = localStorage.getItem('jwt');
+        if (!jwt) {
+            return;
+        }
         api
-            .delCard(selectedForDelCard)
+            .delCard(selectedForDelCard, jwt)
             .then(() => {
                 setCards((cards) =>
                     cards.filter((card) => card._id !== selectedForDelCard)
@@ -216,12 +240,13 @@ function App() {
     }
 
     function onLogin(data) {
-        console.log(data);
+        console.log(`onLogin ${data}`);
         return auth
             .authorize(data)
             .then((res) => {
                 setIsLoggedIn(true);
                 localStorage.setItem("jwt", res.token);
+                handleTokenCheck();
                 history.push("/");
             })
             .catch((err) => {
@@ -233,10 +258,13 @@ function App() {
     function handleTokenCheck() {
         if (localStorage.getItem("jwt")) {
             const jwt = localStorage.getItem("jwt");
+            if (!jwt) {
+                return;
+            }
             auth
-                .checkToken(jwt)
+                .checkUser(jwt)
                 .then((res) => {
-                    setEmail(res.data.email);
+                    setEmail(res.email);
                     setIsLoggedIn(true);
                     history.push("/");
                 })

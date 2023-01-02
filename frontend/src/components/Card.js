@@ -3,10 +3,14 @@ import { useContext } from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+    console.log(card)
+    console.log(`Карточка ${card._id}. Владелец ${card.owner._id}`);
     // Текущий пользователь
     const currentUser = useContext(CurrentUserContext);
+    console.log(`Пользователь ${currentUser._id}`);
     // Определяем, являемся ли мы владельцем текущей карточки
     const isOwner = card.owner._id === currentUser._id;
+    console.log(`Владелец ${isOwner}`);
     // Создаём переменную, которую после зададим в `className` для кнопки удаления
     const cardDeleteButtonClassName = "element__del-button";
     // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
