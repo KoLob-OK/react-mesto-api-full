@@ -19,12 +19,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
   },
   "author": "KolobOK",
   "license": "ISC",
-  "homepage": "https://KoLob-OK.github.io/react-mesto-auth/",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -44,6 +41,5 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
   }
 }
