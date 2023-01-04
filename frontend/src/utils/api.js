@@ -136,7 +136,7 @@ class Api {
 
 /*++++++++++++++++++++API+++++++++++++++++++++++*/
 const api = new Api({
-        baseUrl: 'https://api.mesto-nn.students.nomoredomains.club',
+        baseUrl: 'http://localhost:3000',
         headers: {
             'Content-Type': 'application/json',
             // 'Authorization': `Bearer ${localStorage.getItem('jwt')}`,

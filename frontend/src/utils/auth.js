@@ -63,6 +63,6 @@ class Auth {
 }
 
 /*++++++++++++++++++++API+++++++++++++++++++++++*/
-const auth = new Auth('https://api.mesto-nn.students.nomoredomains.club');
+const auth = new Auth('http://localhost:3000');
 
 export default auth;
