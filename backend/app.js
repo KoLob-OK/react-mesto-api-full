@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
@@ -12,8 +14,6 @@ const auth = require('./middlewares/auth');
 const { ErrorHandler, handleError } = require('./errors/handleError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-require('dotenv').config();
-
 const { PORT = 3000 } = process.env;
 
 const app = express();
@@ -27,11 +27,12 @@ const limiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-app.use(limiter);
-app.use(helmet());
+
 app.use(express.json());
 app.use(cors());
 app.use(requestLogger); // подключаем логгер запросов
+app.use(limiter);
+app.use(helmet());
 
 // Краш-тест сервера (запрос вызывает падение сервера для проверки его автоматического восстановления)
 app.get('/crash-test', () => {
@@ -45,22 +46,23 @@ app.post('/signin', celebrate({
   // валидируем тело запроса
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
   }),
 }), login);
 app.post('/signup', celebrate({
   // валидируем тело запроса
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
     avatar: Joi.string().regex(regexUrl),
   }),
 }), createUser);
 // роуты, которым авторизация нужна
-app.use('/users', auth, usersRouter);
-app.use('/cards', auth, cardsRouter);
+app.use(auth);
+app.use('/users', usersRouter);
+app.use('/cards', cardsRouter);
 
 // запрос к ошибочному роуту
 app.use('*', (req, res, next) => {
@@ -82,8 +84,7 @@ mongoose
     console.log('Database connection error');
   });
 
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
+app.use((err, res, next) => {
   handleError(err, res);
 });
 
