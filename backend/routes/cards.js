@@ -1,4 +1,5 @@
 const { celebrate, Joi } = require('celebrate');
+const { regexUrl } = require('../utils/constants');
 
 const router = require('express').Router();
 
@@ -9,8 +10,6 @@ const {
   likeCard,
   deleteLike,
 } = require('../controllers/cards');
-
-const regexUrl = /http(s?):\/\/(www\.)?[0-9a-zA-Z-]+\.[a-zA-Z]+([0-9a-zA-Z-._~:/?#[\]@!$&'()*+,;=]+)/;
 
 router.get('/', getAllCards);
 

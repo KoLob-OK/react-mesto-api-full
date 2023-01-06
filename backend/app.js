@@ -9,6 +9,7 @@ const { celebrate, errors, Joi } = require('celebrate');
 
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
+const { regexUrl, limiterConfig } = require('./utils/constants');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { ErrorHandler, handleError } = require('./errors/handleError');
@@ -18,15 +19,7 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-const regexUrl = /http(s?):\/\/(www\.)?[0-9a-zA-Z-]+\.[a-zA-Z]+([0-9a-zA-Z-._~:/?#[\]@!$&'()*+,;=]+)/;
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-
+const limiter = rateLimit(limiterConfig);
 
 app.use(express.json());
 app.use(cors());
@@ -84,9 +77,7 @@ mongoose
     console.log('Database connection error');
   });
 
-app.use((err, res, next) => {
-  handleError(err, res);
-});
+app.use(handleError);
 
 app.listen(PORT, () => {
   console.log(`App  listening on port ${PORT}`);

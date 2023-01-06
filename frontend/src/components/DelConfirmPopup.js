@@ -16,7 +16,7 @@ function DelConfirmPopup({ card, onClose, onConfirm, onLoading }) {
             onSubmit={handleSubmit}>
             <button className="form__submit"
                     type="submit">
-                {onLoading ? "Сохранение..." : "Да"}
+                {onLoading ? "Удаление..." : "Да"}
             </button>
         </PopupWithForm>
     )

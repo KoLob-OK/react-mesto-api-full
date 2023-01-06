@@ -6,7 +6,7 @@ class ErrorHandler extends Error {
   }
 }
 
-const handleError = (err, res, next) => {
+const handleError = (err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = statusCode === 500 ? 'Ошибка 500. На сервере произошла ошибка' : err.message;
   res.status(statusCode).json({
