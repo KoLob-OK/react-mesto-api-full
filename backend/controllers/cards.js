@@ -31,10 +31,9 @@ const createCard = async (req, res, next) => {
     res.status(statusCode.created).send(card);
   } catch (err) {
     if (err.name === 'CastError' || err.name === 'ValidationError') {
-      return next(new ErrorHandler(400, 'Ошибка 400. Некорректные данные при создании карточки'));
-    } else {
-      next(err);
+      next(new ErrorHandler(400, 'Ошибка 400. Некорректные данные при создании карточки'));
     }
+    next(err);
   }
 };
 

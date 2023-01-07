@@ -20,7 +20,7 @@ const createUser = async (req, res, next) => {
       email, password, name, about, avatar,
     } = req.body;
     const passHash = await bcrypt.hash(password, 10);
-    let user = await User.create({
+    const user = await User.create({
       email,
       password: passHash,
       name,
@@ -37,10 +37,10 @@ const createUser = async (req, res, next) => {
     // next();
   } catch (err) {
     if (err.code === 11000) {
-      return next(new ErrorHandler(409, `Ошибка 409. Пользователь ${req.body.email} уже существует`));
+      next(new ErrorHandler(409, `Ошибка 409. Пользователь ${req.body.email} уже существует`));
     }
     if (err.name === 'CastError' || err.name === 'ValidationError') {
-      return next(new ErrorHandler(400, 'Ошибка 400. Неверные данные'));
+      next(new ErrorHandler(400, 'Ошибка 400. Неверные данные'));
     }
     next(err);
   }
@@ -82,7 +82,7 @@ const getCurrentUser = async (req, res, next) => {
   try {
     const user = await User.findById(_id);
     if (!user) {
-      return next(new ErrorHandler(404, 'Ошибка 404. Пользователь не найден'));
+      next(new ErrorHandler(404, 'Ошибка 404. Пользователь не найден'));
     }
     res.status(statusCode.ok).send(user);
     console.log('Текущий пользователь загружен');
@@ -110,7 +110,7 @@ const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
-      return next(new ErrorHandler(404, 'Ошибка 404. Пользователь не найден'));
+      next(new ErrorHandler(404, 'Ошибка 404. Пользователь не найден'));
     }
     res.status(statusCode.ok).send(user);
   } catch (err) {
@@ -133,12 +133,12 @@ const updateUser = async (req, res, next) => {
       },
     );
     if (!user) {
-      return next(new ErrorHandler(404, 'Ошибка 404. Пользователь не найден'));
+      next(new ErrorHandler(404, 'Ошибка 404. Пользователь не найден'));
     }
     res.status(statusCode.ok).send(user);
   } catch (err) {
     if (err.name === 'CastError' || err.name === 'ValidationError') {
-      return next(new ErrorHandler(400, 'Ошибка 400. Неверные данные'));
+      next(new ErrorHandler(400, 'Ошибка 400. Неверные данные'));
     }
     next(err);
   }
@@ -159,12 +159,12 @@ const updateAvatar = async (req, res, next) => {
       },
     );
     if (!user) {
-      return next(new ErrorHandler(404, 'Ошибка 404. Пользователь не найден'));
+      next(new ErrorHandler(404, 'Ошибка 404. Пользователь не найден'));
     }
     res.status(statusCode.ok).send(user);
   } catch (err) {
     if (err.name === 'CastError' || err.name === 'ValidationError') {
-      return next(new ErrorHandler(400, 'Ошибка 400. Неверные данные'));
+      next(new ErrorHandler(400, 'Ошибка 400. Неверные данные'));
     }
     next(err);
   }

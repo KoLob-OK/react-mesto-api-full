@@ -1,7 +1,7 @@
 const { celebrate, Joi } = require('celebrate');
-const { regexUrl } = require('../utils/constants');
-
 const router = require('express').Router();
+
+const { regexUrl } = require('../utils/constants');
 
 const {
   getAllUsers,
