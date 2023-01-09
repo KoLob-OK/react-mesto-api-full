@@ -7,7 +7,7 @@ const statusCode = {
   created: 201,
 };
 
-// получение всех карточек
+// GET /cards - получение всех карточек
 const getAllCards = async (req, res, next) => {
   console.log('getAllCards');
   try {
@@ -19,7 +19,7 @@ const getAllCards = async (req, res, next) => {
   }
 };
 
-// создание карточки
+// POST /cards - создание карточки
 const createCard = async (req, res, next) => {
   console.log('createCard');
   const { name, link } = req.body;
@@ -31,13 +31,13 @@ const createCard = async (req, res, next) => {
     res.status(statusCode.created).send(card);
   } catch (err) {
     if (err.name === 'CastError' || err.name === 'ValidationError') {
-      next(new ErrorHandler(400, 'Ошибка 400. Некорректные данные при создании карточки'));
+      next(new ErrorHandler(400, 'Ошибка 400. Переданы некорректные данные при создании карточки'));
     }
     next(err);
   }
 };
 
-// удаление карточки
+// DELETE /cards/:cardId - удаление карточки
 const deleteCard = async (req, res, next) => {
   console.log('deleteCard');
   try {
@@ -50,15 +50,19 @@ const deleteCard = async (req, res, next) => {
     const ownerId = card.owner._id.toString();
     if (ownerId !== userId) {
       next(new ErrorHandler(403, 'Ошибка 403. Удаление чужой карточки запрещено'));
+      return;
     }
     await Card.findByIdAndRemove(cardId);
     res.status(statusCode.ok).send(card);
   } catch (err) {
+    if (err.name === 'CastError' || err.name === 'ValidationError') {
+      next(new ErrorHandler(400, 'Ошибка 400. Переданы некорректные данные при удалении карточки'));
+    }
     next(err);
   }
 };
 
-// лайк карточки
+// PUT /cards/:cardId/likes - лайк карточки
 const likeCard = async (req, res, next) => {
   console.log('likeCard');
   const { cardId } = req.params;
@@ -78,7 +82,7 @@ const likeCard = async (req, res, next) => {
   }
 };
 
-// удаление лайка карточки
+// DELETE /cards/:cardId/likes - удаление лайка карточки
 const deleteLike = async (req, res, next) => {
   console.log('deleteLike');
   try {

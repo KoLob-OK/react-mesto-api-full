@@ -12,7 +12,7 @@ const statusCode = {
   created: 201,
 };
 
-// создание пользователя
+// POST /signup - создание пользователя (email*, password*)
 const createUser = async (req, res, next) => {
   console.log('createUser');
   try {
@@ -46,7 +46,7 @@ const createUser = async (req, res, next) => {
   }
 };
 
-// аутентификация пользователя
+// POST /signin - аутентификация пользователя (email*, password*)
 const login = async (req, res, next) => {
   console.log('login');
   const { email, password } = req.body;
@@ -74,7 +74,7 @@ const login = async (req, res, next) => {
   }
 };
 
-// получение инфо о текущем пользователе
+// GET /users/me - получение инфо о текущем пользователе
 const getCurrentUser = async (req, res, next) => {
   console.log('getCurrentUser');
   const { _id } = req.user;
@@ -91,7 +91,7 @@ const getCurrentUser = async (req, res, next) => {
   }
 };
 
-// получение всех пользователей
+// GET /users - получение всех пользователей
 const getAllUsers = async (req, res, next) => {
   console.log('getAllUsers');
   try {
@@ -102,7 +102,7 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
-// получение пользователя по id
+// GET /users/:userId - получение пользователя по id
 const getUser = async (req, res, next) => {
   console.log('getUser');
   const { userId } = req.params;
@@ -118,7 +118,7 @@ const getUser = async (req, res, next) => {
   }
 };
 
-// обновление данных пользователя
+// PATCH /users/me - обновление данных пользователя
 const updateUser = async (req, res, next) => {
   console.log('updateUser');
   const { name, about } = req.body;
@@ -144,7 +144,7 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-// обновление аватара пользователя
+// PATCH /users/me/avatar - обновление аватара пользователя
 const updateAvatar = async (req, res, next) => {
   console.log('updateAvatar');
   const { avatar } = req.body;
